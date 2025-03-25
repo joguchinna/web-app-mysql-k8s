@@ -1,5 +1,9 @@
 pipeline {
     agent any
+     parameters {
+        // String Parameter
+        string(name: 'IMAGE_TAG', defaultValue: '', description: 'Image tag')
+   }
     stages {
         stage('Verify deployment details') {
             steps {
@@ -14,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Use AWS credentials to authenticate and configure kubectl for EKS
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'eks-credentials']]) {
+                    /*withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'eks-credentials']]) {
                         sh """
                             export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                             export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
@@ -29,7 +33,10 @@ pipeline {
                             kubectl apply -f web-deployment.yml
                             kubectl apply -f web-service.yml
                             kubectl apply -f web-ingress.yml
-                        """
+                        """*/
+                        sh """
+                          docker images
+                          docker run -itd --name app -p 9090:5000 637423446577.dkr.ecr.us-east-1.amazonaws.com/web-app:${params.IMAGE_TAG}
                     }
                 }
             }
