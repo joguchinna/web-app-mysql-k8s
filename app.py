@@ -1,13 +1,18 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Route for the home page
+# Home Route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Route for the register page
+# Login Route
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('login.html')
+
+# Register Route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     return render_template('register.html')
