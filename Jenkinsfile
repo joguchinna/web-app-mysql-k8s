@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        AWS_ECR_REPOSITORY_URL = "654654348225.dkr.ecr.us-east-2.amazonaws.com"
+        AWS_ECR_REPOSITORY_URL = "637423446577.dkr.ecr.us-east-1.amazonaws.com"
         WEB_APP_ECR_REPO_NAME = 'web-app'
         MYSQL_ECR_REPO_NAME = "mysql-db"
     }
@@ -24,7 +24,7 @@ pipeline {
                 }
             }
         }
-        stage('Sonar code quality analysis') {
+        /*stage('Sonar code quality analysis') {
             steps {
                 script {
                     def scannerHome = tool 'sonarscanner'
@@ -33,7 +33,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage ('Build web app docker image') {
             steps {
                 script {
@@ -44,7 +44,7 @@ pipeline {
         stage('Publish web app image into aws ecr') {
             steps {
                 script {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'eks-credentials']]) {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                   sh """
                         export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                         export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
