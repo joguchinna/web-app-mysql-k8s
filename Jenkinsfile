@@ -4,6 +4,7 @@ pipeline {
         AWS_ECR_REPOSITORY_URL = "637423446577.dkr.ecr.us-east-1.amazonaws.com"
         WEB_APP_ECR_REPO_NAME = 'web-app'
         MYSQL_ECR_REPO_NAME = "mysql-db"
+        PATH = "/usr/local/bin:$PATH"
     }
     stages {
         stage('Install dependencies') {
